@@ -1,0 +1,38 @@
+#include "LEDElectricityModule.h" 
+#include "Modules/utils/ControlElectricity.h" 
+#include "util/delay.h"
+#include <avr/io.h>
+
+
+int ReturnLEDElectricityStatus(int PIN_ID) {
+  int IsTurnedOn = 1; 
+
+  if (PIND & (1 << PIN_ID)) {
+      IsTurnedOn = 1;
+      return IsTurnedOn; 
+  } else {
+        IsTurnedOn = 0; 
+        return IsTurnedOn;    
+      }
+
+}
+
+
+void TURN_OFF_ALL_LEDS(LED_PINS LED_ARRAY[], int ARRAY_AMOUNT) {
+  for (uint8_t i = 0; i < ARRAY_AMOUNT; i++) {
+    *LED_ARRAY[i].PORT &= ~(1 << LED_ARRAY[i].PIN); 
+  }
+} 
+
+
+void BlinkLED(int PIN_ID) {
+  
+  PutElectricity(PIN_ID); 
+
+  _delay_ms(500); 
+
+  RemoveElectricity(PIN_ID); 
+
+  _delay_ms(500);
+
+}
