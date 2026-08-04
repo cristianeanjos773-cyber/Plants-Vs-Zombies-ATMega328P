@@ -6,5 +6,5 @@
 
 void USART_INIT(); 
 void SETUP_RECEIVER_AND_SENDER(); 
-void USART_SEND(); 
+void USART_SEND(char MESSAGE); 
 void ON_BYTE_RECEVEID(); 

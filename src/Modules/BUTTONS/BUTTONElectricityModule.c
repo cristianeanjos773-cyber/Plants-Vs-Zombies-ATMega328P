@@ -2,6 +2,7 @@
 #include "Modules/LED/LEDElectricityModule.h"
 #include "Modules/utils/ControlDDR.h"
 #include "Modules/utils/ControlElectricity.h" 
+#include "Modules/SERIAL_FOLDER/USART_DRIVE.h"
 #include <avr/io.h> 
 #include <stdio.h>
 #include <util/delay.h>
@@ -53,6 +54,7 @@ void OnButtonPressedEvent(void) {
 
   if (IsButtonPressed == 1 && !ButtonLastState) {
     TimesPressedVAR++;
+    USART_SEND('A'); 
   }
 
   ButtonLastState = IsButtonPressed; 
@@ -64,7 +66,8 @@ void OnButtonPressedEvent(void) {
   }
 
   uint8_t CHOSEN_PIN = LEDS[TimesPressedVAR].PIN; 
-    
+  
+  
   REACTORS[TimesPressedVAR](CHOSEN_PIN);
   
 
