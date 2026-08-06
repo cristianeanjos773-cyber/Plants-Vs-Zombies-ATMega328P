@@ -3,6 +3,8 @@
 #include "Modules/utils/ControlDDR.h"
 #include "Modules/utils/ControlElectricity.h" 
 #include "Modules/SERIAL_FOLDER/USART_DRIVE.h"
+#include "Modules/utils/Buzzer_Logic.h"
+
 #include <avr/io.h> 
 #include <stdio.h>
 #include <util/delay.h>
@@ -24,16 +26,16 @@ uint8_t ReturnButtonElectricityStatus(int PIN_ID) {
 
 }
 
-void (*REACTORS[])() = {
+void (*REACTORS[])(volatile uint8_t *PORT_ID, uint8_t PIN_ID) = {
   BlinkLED, 
-  PutElectricity,   
+  BlinkLED,   
   BlinkLED, 
 }   ;
 
 LED_PINS LEDS[3] = {
-  {&PORTD, PD3},
-  {&PORTD, PD3},
-  {&PORTD, PD3},
+  {&PORTD, PD4},
+  {&PORTD, PD4},
+  {&PORTD, PD4},
 }   ; 
 
 void OnButtonPressedEvent(void) { 
@@ -55,15 +57,15 @@ void OnButtonPressedEvent(void) {
     } 
     
     else {
-      uint8_t CHOSEN_PIN = LEDS[TimesPressedVAR].PIN; 
-      REACTORS[TimesPressedVAR](CHOSEN_PIN); 
-      PutElectricity(PD3); 
-      PutElectricity(PD4); 
+      //volatile uint8_t *CHOSEN_PORT = LEDS[TimesPressedVAR].PORT;    
+      //uint8_t CHOSEN_PIN = LEDS[TimesPressedVAR].PIN;
+      //REACTORS[TimesPressedVAR](CHOSEN_PORT, CHOSEN_PIN); 
+      BlinkLED(&PORTD, PD4); 
       USART_SEND('A');
     }
 
   }
-  
+  BUZZER_STOP(); 
   ButtonLastState = IsButtonPressed; 
 
 }

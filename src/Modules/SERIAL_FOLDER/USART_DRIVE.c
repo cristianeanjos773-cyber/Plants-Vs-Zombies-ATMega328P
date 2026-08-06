@@ -70,7 +70,7 @@ void USART_INIT() {
     int baud = 9600; 
     uint16_t UBRR_VAL = (F_CPU / (16UL * baud)) - 1;
     UBRR0 = UBRR_VAL;
-    UCSR0C = (1 << UCSZ00) | (1 << UCSZ01);
+    UCSR0C |= (1 << UCSZ00) | (1 << UCSZ01);
     SETUP_RECEIVER_AND_SENDER(); 
     sei();  
 }
