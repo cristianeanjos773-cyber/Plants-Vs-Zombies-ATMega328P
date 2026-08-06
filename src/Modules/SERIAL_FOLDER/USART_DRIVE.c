@@ -64,7 +64,6 @@ void USART_SEND(char MESSAGE) {
     TXHead = (TXHead + 1) % BUFFER_SIZE;
     UCSR0B |= (1 << UDRIE0); 
 
-
 }
 
 void USART_INIT() {

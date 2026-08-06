@@ -32,43 +32,38 @@ void (*REACTORS[])() = {
 
 LED_PINS LEDS[3] = {
   {&PORTD, PD3},
-  {&PORTD, PD4},
-  {&PORTD, PD7},
+  {&PORTD, PD3},
+  {&PORTD, PD3},
 }   ; 
-
-// PD3 = Green, PD4 = Yellow (reminder)
-
-
 
 void OnButtonPressedEvent(void) { 
   
-  SetPinAsOutput(PD3);
-  SetPinAsOutput(PD4); 
-  SetPinAsOutput(PD7);
-
   static uint8_t IsButtonPressed; 
-
-  IsButtonPressed = ReturnButtonElectricityStatus(PD5);
   static uint8_t ButtonLastState = 0; 
   static int TimesPressedVAR = -1; 
 
+  IsButtonPressed = ReturnButtonElectricityStatus(PD7);
+ 
   if (IsButtonPressed == 1 && !ButtonLastState) {
+    
     TimesPressedVAR++;
-    USART_SEND('A'); 
-  }
+    
+    if (TimesPressedVAR >= 3) {
+      TimesPressedVAR = 0;
+      TURN_OFF_ALL_LEDS(LEDS, 3);
+      ButtonLastState = IsButtonPressed; 
+    } 
+    
+    else {
+      uint8_t CHOSEN_PIN = LEDS[TimesPressedVAR].PIN; 
+      REACTORS[TimesPressedVAR](CHOSEN_PIN); 
+      PutElectricity(PD3); 
+      PutElectricity(PD4); 
+      USART_SEND('A');
+    }
 
+  }
+  
   ButtonLastState = IsButtonPressed; 
-
-  if (TimesPressedVAR >= 3) {
-    TimesPressedVAR = 0;
-    TURN_OFF_ALL_LEDS(LEDS, 3); 
-    return;  
-  }
-
-  uint8_t CHOSEN_PIN = LEDS[TimesPressedVAR].PIN; 
-  
-  
-  REACTORS[TimesPressedVAR](CHOSEN_PIN);
-  
 
 }
