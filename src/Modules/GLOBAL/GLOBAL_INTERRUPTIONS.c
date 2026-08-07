@@ -6,12 +6,12 @@
 
 #include <avr/io.h> 
 #include <avr/interrupt.h>
-#include 
+#include "Modules/GLOBAL/ISRFunctionsCallback.h"
 
 ISR(TIMER1_COMPA_vect) {
-
+    LED_CALLBACK(); 
 }
 
-ISR(TIMER1_COMPA_vect) {
-
+ISR(TIMER1_COMPB_vect) {
+    BUZZER_CALLBACK(); 
 }

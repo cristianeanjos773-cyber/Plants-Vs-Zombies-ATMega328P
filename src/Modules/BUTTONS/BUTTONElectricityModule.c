@@ -1,15 +1,19 @@
 #include "BUTTONElectricityModule.h"
+
 #include "Modules/LED/LEDElectricityModule.h"
 #include "Modules/utils/ControlDDR.h"
+
 #include "Modules/utils/ControlElectricity.h" 
+
 #include "Modules/SERIAL_FOLDER/USART_DRIVE.h"
-#include "Modules/utils/Buzzer_Logic.h"
 #include "Modules/utils/TimerInterruptLogic.h"
+
 #include <avr/io.h>
 #include <avr/interrupt.h> 
 #include <stdio.h>
 
 #include <util/delay.h>
+
 #include <stdint.h>
 
 volatile int TimesPressedVAR = -1; 
@@ -43,13 +47,6 @@ LED_PINS LEDS[3] = {
   {&PORTD, PD5},
 }   ; 
 
-ISR(TIMER1_COMPA_vect) {
-  volatile uint8_t *CHOSEN_PORT = LEDS[TimesPressedVAR].PORT;    
-  uint8_t CHOSEN_PIN = LEDS[TimesPressedVAR].PIN;
-  REACTORS[TimesPressedVAR](CHOSEN_PORT, CHOSEN_PIN); 
-  InvertElectricity(&PORTD, PD6); 
-}
-
 void OnButtonPressedEvent(void) { 
   
   static uint8_t IsButtonPressed; 
@@ -64,7 +61,6 @@ void OnButtonPressedEvent(void) {
     if (TimesPressedVAR >= 3) {
       TimesPressedVAR = -1;
       TURN_OFF_ALL_LEDS(LEDS, 3);
-      ButtonLastState = IsButtonPressed; 
     } 
     
     else { 
@@ -72,6 +68,7 @@ void OnButtonPressedEvent(void) {
     }
 
   }
-  BUZZER_STOP(); 
+  
   ButtonLastState = IsButtonPressed; 
+
 }
