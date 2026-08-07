@@ -23,15 +23,3 @@ void TURN_OFF_ALL_LEDS(LED_PINS LED_ARRAY[], int ARRAY_AMOUNT) {
   }
 } 
 
-
-void BlinkLED(volatile uint8_t *PORT_ID, uint8_t PIN_ID) {
-  
-  PutElectricity(PORT_ID, PIN_ID); 
-
-  _delay_ms(500); 
-
-  RemoveElectricity(PORT_ID, PIN_ID); 
-
-  _delay_ms(500);
-  
-}

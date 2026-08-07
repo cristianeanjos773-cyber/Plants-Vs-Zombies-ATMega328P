@@ -8,7 +8,6 @@ typedef struct {
 } LED_PINS; 
 
 void TURN_OFF_ALL_LEDS(LED_PINS LED_ARRAY[], int ARRAY_AMOUNT); 
-void BlinkLED(volatile uint8_t *PORT_ID, uint8_t PIN_ID); 
 int ReturnLEDElectricityStatus(int PIN_ID); 
 
 #endif 
