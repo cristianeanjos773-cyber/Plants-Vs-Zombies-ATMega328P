@@ -15,5 +15,4 @@ void CONFIGUE_INTTERUPTION_TIME(){
     TCCR1B |= (1 << CS12);
 
     sei(); 
-    
 }

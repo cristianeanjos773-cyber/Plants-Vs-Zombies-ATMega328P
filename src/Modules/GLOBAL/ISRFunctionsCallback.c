@@ -1,6 +1,6 @@
 #include "ISRFunctionsCallback.h"
 #define LED_BEATS 31250   
-#define BUZZER_BEATS 16
+#define BUZZER_BEATS 100
 
 void LED_CALLBACK() {
 
@@ -12,10 +12,10 @@ void LED_CALLBACK() {
   uint8_t CHOSEN_PIN = LEDS[TimesPressedVAR].PIN;
   REACTORS[TimesPressedVAR](CHOSEN_PORT, CHOSEN_PIN); 
   OCR1A += LED_BEATS;
-
+   
 }
 
 void BUZZER_CALLBACK() {
-    InvertElectricity(&PORTD, PD6); 
-    OCR1B += BUZZER_BEATS; 
+   InvertElectricity(&PORTD, PD6); 
+   OCR1B += BUZZER_BEATS; 
 }

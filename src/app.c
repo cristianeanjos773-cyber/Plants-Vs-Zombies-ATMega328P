@@ -6,21 +6,22 @@
 #include "Modules/utils/ControlElectricity.h"
 #include "Modules/SERIAL_FOLDER/USART_DRIVE.h"
 #include "Modules/GLOBAL/ISRFunctionsCallback.h"
+#include "Modules/utils/TimerInterruptLogic.h"
+
 #include <avr/io.h>
 #include <util/delay.h>
 
 void APP_SET_PINS() {
-  SetPinAsInput(&DDRD, PD7); 
-  SetPinAsOutput(&DDRD, PD3); 
+  SetPinAsInput(&DDRB, PB4); 
+  PutElectricity(&PORTB, PB4); 
   SetPinAsOutput(&DDRD, PD5);
   SetPinAsOutput(&DDRD, PD6); 
   SetPinAsOutput(&DDRD, PD4);
-  SetPinAsOutput(&DDRB, PB3); 
 }
 
 void APP_INIT() {
   APP_SET_PINS(); 
-  CONFIGUE_INTTERUPTION_TIME();
+  CONFIGUE_INTTERUPTION_TIME(); 
   USART_INIT(); 
 }
 

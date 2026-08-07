@@ -9,9 +9,9 @@
 #include "Modules/GLOBAL/ISRFunctionsCallback.h"
 
 ISR(TIMER1_COMPA_vect) {
-    LED_CALLBACK(); 
+  LED_CALLBACK(); 
 }
 
 ISR(TIMER1_COMPB_vect) {
-    BUZZER_CALLBACK(); 
+  BUZZER_CALLBACK(); 
 }
