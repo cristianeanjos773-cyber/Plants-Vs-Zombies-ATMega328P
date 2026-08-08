@@ -2,24 +2,19 @@
 
 #include "Modules/LED/LEDElectricityModule.h"
 #include "Modules/utils/ControlDDR.h"
-
 #include "Modules/utils/ControlElectricity.h" 
 
 #include "Modules/SERIAL_FOLDER/USART_DRIVE.h"
-#include "Modules/utils/TimerInterruptLogic.h"
-
 #include <avr/io.h>
 #include <avr/interrupt.h> 
 #include <stdio.h>
-
 #include <util/delay.h>
-
 #include <stdint.h>
 
 volatile int TimesPressedVAR = -1; 
 
 
-uint8_t ReturnButtonElectricityStatus(int PIN_ID) {
+uint8_t CHECK_BUTTON_PHYSICAL_STATS(int PIN_ID) {
   
   if (!(PINB & (1 << PIN_ID))) {
                                                                                             
@@ -52,12 +47,12 @@ LED_PINS LEDS[3] = {
   {&PORTD, PD5},
 }   ; 
 
-void OnButtonPressedEvent(void) { 
+void ON_BUTTON_PRESSED(void) { 
   
   static uint8_t IsButtonPressed; 
   static uint8_t ButtonLastState = 0; 
 
-  IsButtonPressed = ReturnButtonElectricityStatus(PB4);
+  IsButtonPressed = CHECK_BUTTON_PHYSICAL_STATS(PB4);
  
   if (IsButtonPressed == 1 && !ButtonLastState) {
     
@@ -66,10 +61,9 @@ void OnButtonPressedEvent(void) {
     if (TimesPressedVAR >= 3) {
       TimesPressedVAR = -1;
       TURN_OFF_ALL_LEDS(LEDS, 3);
-    } 
-    
-    else { 
+    } else { 
       USART_SEND('A');
+      InvertElectricity(&PORTD, PD6); 
     }
 
   }

@@ -1,13 +1,14 @@
 #include "LEDElectricityModule.h" 
 #include "Modules/utils/ControlElectricity.h" 
 #include "util/delay.h"
+#include <stdint.h>
 #include <avr/io.h>
 
 
-int ReturnLEDElectricityStatus(int PIN_ID) {
+int ReturnLEDElectricityStatus(volatile uint8_t *PORT_CHECK_ID, uint8_t PIN_ID) {
   int IsTurnedOn = 1; 
 
-  if (PIND & (1 << PIN_ID)) {
+  if (*PORT_CHECK_ID & (1 << PIN_ID)) {
       IsTurnedOn = 1;
       return IsTurnedOn; 
   } else {
@@ -23,3 +24,15 @@ void TURN_OFF_ALL_LEDS(LED_PINS LED_ARRAY[], int ARRAY_AMOUNT) {
   }
 } 
 
+void TASK_LED(void) {
+   
+  if (TimesPressedVAR < 0 || TimesPressedVAR >= 3) {
+    return; 
+  }
+
+  volatile uint8_t *CHOSEN_PORT = LEDS[TimesPressedVAR].PORT;
+  uint8_t CHOSEN_PIN = LEDS[TimesPressedVAR].PIN;
+
+  REACTORS[TimesPressedVAR](CHOSEN_PORT, CHOSEN_PIN);
+
+}
