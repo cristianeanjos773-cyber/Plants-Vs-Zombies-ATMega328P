@@ -2,6 +2,7 @@
 
 #include "Modules/BUTTONS/BUTTONElectricityModule.h"
 #include "Modules/LED/LEDElectricityModule.h" 
+#include "Modules/LIGHT_SENSORS/LIGHT_SENSOR_TASK.h"
 
 #include "Modules/utils/ControlDDR.h"
 #include "Modules/utils/ControlElectricity.h"
@@ -24,7 +25,8 @@ void APP_SET_PINS() {
 
 void APP_INIT() {
   APP_SET_PINS(); 
-  SCHEDULER_INIT();  
+  SCHEDULER_INIT();
+  LIGHT_SENSOR_INIT();   
   USART_INIT(); 
 }
 
