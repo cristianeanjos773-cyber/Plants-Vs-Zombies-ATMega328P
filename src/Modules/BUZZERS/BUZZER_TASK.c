@@ -9,6 +9,7 @@ void BUZZER_TASK(void) {
    static uint8_t BUZZER_PLAYING = 0; 
    
    if (TimesPressedVAR < 0 || TimesPressedVAR >= 3) {
+     BUZZER_STOP(); 
     return; 
    }
 
@@ -25,7 +26,7 @@ void BUZZER_TASK(void) {
 void BUZZER_PLAY(void) {
     TCCR0A |= (1 << WGM01) | (1 << COM0A0); 
     TCCR0B |= (1 << CS01) | (1 << CS00); 
-    OCR0A = 70; 
+    OCR0A = 61; 
  }
 
 void BUZZER_STOP(void) {
