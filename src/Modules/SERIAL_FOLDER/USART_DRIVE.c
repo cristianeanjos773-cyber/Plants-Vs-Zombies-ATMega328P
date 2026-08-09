@@ -66,6 +66,13 @@ void USART_SEND(char MESSAGE) {
 
 }
 
+void USART_SEND_STRING(char *MESSAGE) {
+    while (*MESSAGE != '\0') {
+        USART_SEND(*MESSAGE); 
+        MESSAGE++;
+    }
+}
+
 void USART_INIT() {
     int baud = 9600; 
     uint16_t UBRR_VAL = (F_CPU / (16UL * baud)) - 1;

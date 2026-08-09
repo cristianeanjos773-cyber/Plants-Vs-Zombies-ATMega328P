@@ -8,14 +8,14 @@ TASK_CONFIG TASK_SYSTEMS[] = {
     {TASK_LED, 1000, 0, 0},  
     {ON_BUTTON_PRESSED, 20, 0, 0}, 
     {BUZZER_TASK, 16, 0, 0}, 
-    {LIGHT_SENSOR_READ, 200, 0, 0},
+    {LIGHT_SENSOR_TASK, 200, 0, 0},
     //{TASK_MONITOR_TEMPERATURE, 2000, 0, 0}, 
 };
 
 #define TOTAL_TASKS (sizeof(TASK_SYSTEMS) / sizeof(TASK_SYSTEMS[0]))
 
 void SCHEDULER_INIT(void) {
-    TCCR1B = 0; 
+    TCCR1B = 0;
     TCCR1B |= (1 << WGM12);
     OCR1A = 62;
     TIMSK1 |= (1 << OCIE1A);

@@ -27,6 +27,7 @@ uint8_t CHECK_BUTTON_PHYSICAL_STATS(int PIN_ID) {
       _delay_ms(15); 
 
       return 1; 
+
     }
 
   }
@@ -43,7 +44,7 @@ void (*REACTORS[])(volatile uint8_t *PORT_ID, uint8_t PIN_ID) = {
 
 LED_PINS LEDS[3] = {
   {&PORTD, PD5},
-  {&PORTD, PD4},
+  {&PORTD, PD5},
   {&PORTD, PD5},
 }   ; 
 
@@ -51,7 +52,7 @@ void ON_BUTTON_PRESSED(void) {
   
   static uint8_t IsButtonPressed; 
   static uint8_t ButtonLastState = 0; 
-
+  
   IsButtonPressed = CHECK_BUTTON_PHYSICAL_STATS(PB4);
  
   if (IsButtonPressed == 1 && !ButtonLastState) {
@@ -63,6 +64,7 @@ void ON_BUTTON_PRESSED(void) {
       TURN_OFF_ALL_LEDS(LEDS, 3);
     } else { 
       USART_SEND('A');
+      BUZZER_PLAY(); 
       InvertElectricity(&PORTD, PD6); 
     }
 
