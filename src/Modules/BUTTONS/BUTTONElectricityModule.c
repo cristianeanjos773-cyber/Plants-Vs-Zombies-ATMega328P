@@ -5,6 +5,9 @@
 #include "Modules/utils/ControlElectricity.h" 
 
 #include "Modules/SERIAL_FOLDER/USART_DRIVE.h"
+#include "Modules/BUZZERS/BUZZER_TASK.h"
+#include "Modules/GLOBAL/GLOBAL_TYPES.h"
+
 #include <avr/io.h>
 #include <avr/interrupt.h> 
 #include <stdio.h>
@@ -12,7 +15,6 @@
 #include <stdint.h>
 
 volatile int TimesPressedVAR = -1; 
-
 
 uint8_t CHECK_BUTTON_PHYSICAL_STATS(int PIN_ID) {
   
@@ -48,6 +50,10 @@ LED_PINS LEDS[3] = {
   {&PORTD, PD5},
 }   ; 
 
+BUZZER_TASK_CONFIG BUTTON_BUZZER_CONFIG[1] = {
+  {.BUZZER_SPEED = FAST_BUZZER_SPEED},
+}   ; 
+
 void ON_BUTTON_PRESSED(void) { 
   
   static uint8_t IsButtonPressed; 
@@ -62,9 +68,9 @@ void ON_BUTTON_PRESSED(void) {
     if (TimesPressedVAR >= 3) {
       TimesPressedVAR = -1;
       TURN_OFF_ALL_LEDS(LEDS, 3);
+      BUZZER_DEFINE_TASK(BUTTON_BUZZER_CONFIG, 0, BUZZER_MODE_BIP);    
     } else { 
-      USART_SEND('A');
-      BUZZER_PLAY(); 
+      BUZZER_DEFINE_TASK(BUTTON_BUZZER_CONFIG, 1, BUZZER_MODE_BIP);    
       InvertElectricity(&PORTD, PD6); 
     }
 
