@@ -22,6 +22,9 @@ typedef enum {
     BUZZER_MODE_HIGH_PITCH, 
 } BUZZER_MODE_ENUM  ;
 
+typedef void (*USART_SENDERS)(char *MESSAGE); 
+
+
 typedef struct {
     BUZZER_SPEED_ENUM BUZZER_SPEED; 
     BUZZER_MODE_ENUM BUZZER_MODE;

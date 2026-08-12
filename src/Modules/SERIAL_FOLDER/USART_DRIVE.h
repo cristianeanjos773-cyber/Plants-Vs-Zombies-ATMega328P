@@ -4,6 +4,9 @@
 #include <avr/io.h> 
 #include <avr/interrupt.h>
 
+#define SINGLE_LETTER_MODE 0 
+#define STRING_MODE 1 
+
 void USART_INIT(); 
 void SETUP_RECEIVER_AND_SENDER(); 
 void USART_SEND(char MESSAGE); 

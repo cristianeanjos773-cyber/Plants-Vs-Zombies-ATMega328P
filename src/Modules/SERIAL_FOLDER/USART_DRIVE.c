@@ -30,7 +30,7 @@ ISR(USART_RX_vect) {
     RX_BUFFER[RXHead] = SERIAL_MESSAGE;
     RXHead = (RXHead + 1) % BUFFER_SIZE;
 }
-
+ 
 ISR(USART_UDRE_vect) {
     if (TXHead != TXTail) {
         UDR0 = TX_BUFFER[TXTail]; 
@@ -48,22 +48,15 @@ char USART_READ() {
 
     char MESSAGE = RX_BUFFER[RXTail];
     RXTail = (RXTail + 1) % BUFFER_SIZE;  
-    ON_SERIAL_MESSAGE(MESSAGE);  
+    //ON_SERIAL_MESSAGE(MESSAGE);  
     return MESSAGE; 
 
 }
 
 void USART_SEND(char MESSAGE) {
-    
-    if (UCSR0A & (1 << UDRE0)) {
-        UDR0 = MESSAGE;
-        return;
-    }
-    
     TX_BUFFER[TXHead] = MESSAGE;
     TXHead = (TXHead + 1) % BUFFER_SIZE;
     UCSR0B |= (1 << UDRIE0); 
-
 }
 
 void USART_SEND_STRING(char *MESSAGE) {
