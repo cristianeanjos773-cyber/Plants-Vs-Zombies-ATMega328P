@@ -8,3 +8,4 @@ void USART_INIT();
 void SETUP_RECEIVER_AND_SENDER(); 
 void USART_SEND(char MESSAGE); 
 void USART_SEND_STRING(char *MESSAGE); 
+char USART_READ(); 

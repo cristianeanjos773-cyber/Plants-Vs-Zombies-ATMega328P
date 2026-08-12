@@ -5,6 +5,7 @@
 #include "Modules/BUTTONS/BUTTONElectricityModule.h"
 #include "Modules/BUZZERS/BUZZER_TASK.h"
 #include "Modules/LIGHT_SENSORS/LIGHT_SENSOR_TASK.h"
+#include "Modules/SERIAL_FOLDER/USART_TASK.h"
 
 void SCHEDULER_INIT(void);
 void SCHEDULER_RUN(void);  

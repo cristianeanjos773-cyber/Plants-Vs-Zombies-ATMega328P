@@ -2,4 +2,6 @@
 #include "USART_DRIVE.h"
 #include "ON_SERIAL_MESSAGE.h"
 
-void ON_SERIAL_MESSAGE(char MESSAGE) {}
+void ON_SERIAL_MESSAGE(char MESSAGE) {
+    
+}

@@ -48,7 +48,7 @@ char USART_READ() {
 
     char MESSAGE = RX_BUFFER[RXTail];
     RXTail = (RXTail + 1) % BUFFER_SIZE;  
-    ON_SERIAL_MESSAGE(MESSAGE); 
+    ON_SERIAL_MESSAGE(MESSAGE);  
     return MESSAGE; 
 
 }
