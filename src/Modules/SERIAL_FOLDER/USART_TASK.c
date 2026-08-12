@@ -6,13 +6,12 @@
 
 static char Result = COMMUNICATION_NULL_RESULT; 
 
-void USART_TASK() {
-
-}
-
-void USART_TASK_INIT() {
+void USART_TASK(void) {
+    COMMUNICATION_RESULT(); 
     COMMUNICATION_ERROR_HANDLER(); 
 }
+
+
 
 void COMMUNICATION_ERROR_HANDLER(void) {
     
@@ -23,7 +22,7 @@ void COMMUNICATION_ERROR_HANDLER(void) {
 
 }
 
-char COMMUNICATION_RESULT() {
+char COMMUNICATION_RESULT(void) {
 
     Result = USART_READ(); 
 
