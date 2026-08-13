@@ -9,15 +9,7 @@ static char FAILED_MESSAGE_BUFFER[BUFFER_SIZE];
 static uint8_t Index_In = 0; 
 static uint8_t Index_Out = 0; 
 
-void USART_SAFE_SEND(char FAILED_MESSAGE) {
-    
-    if (CURRENT_FAILED_MESSAGE == COMMUNICATION_NULL_RESULT) {
-        CURRENT_FAILED_MESSAGE = FAILED_MESSAGE;
-        USART_SEND(CURRENT_FAILED_MESSAGE);
-        ATTEMPTS = 1;   
-    }
 
-}
 
 void USART_SEND_STRING_WRAPPER(char *MESSAGE) {
     USART_SEND(MESSAGE[0]); 
@@ -62,34 +54,38 @@ void DEQUEUE_MESSAGE() {
 
 void MANAGE_RETRIES(void) {
 
-    static uint8_t IS_BUSY = 0; 
-    
+
     if (CURRENT_FAILED_MESSAGE == COMMUNICATION_NULL_RESULT) {
-        return; 
+        DEQUEUE_MESSAGE(); 
+
+        if (CURRENT_FAILED_MESSAGE == COMMUNICATION_NULL_RESULT) {
+            return; 
+        }
+
+        ATTEMPTS = 1;
+        USART_SAFE_SEND(CURRENT_FAILED_MESSAGE, LETTER_MODE);
     }
 
     char RESULT = COMMUNICATION_RESULT(); 
 
-    if (IS_BUSY) {
-        ENQUEUE_MESSAGE(CURRENT_FAILED_MESSAGE);    
-    } 
-        
-    else {
-       DEQUEUE_MESSAGE(); 
-    }
-
-    if (RESULT == COMMUNICATION_ERROR) { 
-        CURRENT_FAILED_MESSAGE = FAILED_MESSAGE_BUFFER[Index_Out]; 
-        EXECUTE_SEND(CURRENT_FAILED_MESSAGE, 0);
-        IS_BUSY = 1;  
-        ATTEMPTS++;
-    } 
-
-    else if (RESULT == COMMUNICATION_SUCCESS) {
-        IS_BUSY = 0; 
+    if (RESULT == COMMUNICATION_SUCCESS) {
         ATTEMPTS = 0; 
         CURRENT_FAILED_MESSAGE = COMMUNICATION_NULL_RESULT; 
-        return;  
+    }
+
+    else if (RESULT == COMMUNICATION_ERROR) {
+        
+        ATTEMPTS++;
+
+        if (ATTEMPTS > MAX_ATTEMPTS) {
+            CURRENT_FAILED_MESSAGE = COMMUNICATION_NULL_RESULT;
+            ATTEMPTS = 0; 
+        } 
+        
+        else {
+            USART_SAFE_SEND(CURRENT_FAILED_MESSAGE, LETTER_MODE);  
+        }
+
     }
 
 }
@@ -104,12 +100,12 @@ USART_SENDERS DEFINE_CHOSEN_SEND(uint8_t USART_SEND_MODE) {
 
 } 
 
-void EXECUTE_SEND(char message, uint8_t mode) {
+void USART_SAFE_SEND(char message, uint8_t mode) {
     USART_SENDERS WISHED_SEND_MODE = DEFINE_CHOSEN_SEND(mode);
     static char payload[2];
 
     payload[0] = message; 
     payload[1] = '\0' ;
-    
+
     WISHED_SEND_MODE(payload);
 }

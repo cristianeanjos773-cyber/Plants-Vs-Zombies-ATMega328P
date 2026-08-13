@@ -1,5 +1,5 @@
 #include "LIGHT_SENSOR_TASK.h"
-#include "Modules/utils/itoa.h"
+#include "Modules/SERIAL_FOLDER/USART_TASK.h"
 
 void LIGHT_SENSOR_INIT(void) {
     
@@ -15,7 +15,6 @@ void LIGHT_SENSOR_TASK(void) {
     char ADC_STRING_BUFFER[5]; 
     uint16_t ADC_BYTE = LIGHT_SENSOR_READ(ANALOG_PIN_0);  
 
-    ITOA(ADC_BYTE, ADC_STRING_BUFFER);
     
     USART_SEND_STRING(ADC_STRING_BUFFER); 
 
