@@ -32,6 +32,34 @@ static const USART_SENDERS MAPPED_WRAPPERS[] = {
     USART_SEND_STRING_WRAPPER 
 }; 
 
+void ENQUEUE_MESSAGE(char MESSAGE_TO_ENQUEUE) {
+       
+    uint8_t Next_Index_In = (Index_In + 1) % BUFFER_SIZE;  
+    
+    if (Next_Index_In == Index_Out) {
+        return; 
+    }
+
+    FAILED_MESSAGE_BUFFER[Index_In] = MESSAGE_TO_ENQUEUE; 
+    Index_In = Next_Index_In; 
+    
+}
+
+void DEQUEUE_MESSAGE() {
+
+    if (Index_Out == Index_In) {
+        return; 
+    }
+
+    uint8_t Next_Index_Out = (Index_Out + 1) % BUFFER_SIZE; 
+
+    CURRENT_FAILED_MESSAGE = FAILED_MESSAGE_BUFFER[Index_Out];
+    Index_Out = Next_Index_Out; 
+
+    return; 
+
+} 
+
 void MANAGE_RETRIES(void) {
 
     static uint8_t IS_BUSY = 0; 
@@ -42,35 +70,46 @@ void MANAGE_RETRIES(void) {
 
     char RESULT = COMMUNICATION_RESULT(); 
 
-    if (Index_Out == Index_In) {
-        return; 
-    }
-
     if (IS_BUSY) {
-        FAILED_MESSAGE_BUFFER[Index_Out] = CURRENT_FAILED_MESSAGE; 
-        Index_Out = (Index_Out + 1) % BUFFER_SIZE;       
+        ENQUEUE_MESSAGE(CURRENT_FAILED_MESSAGE);    
     } 
-    
+        
     else {
-        CURRENT_FAILED_MESSAGE = FAILED_MESSAGE_BUFFER[Index_In];
-        Index_In = (Index_In + 1) % BUFFER_SIZE;  
+       DEQUEUE_MESSAGE(); 
     }
 
-    if (RESULT == COMMUNICATION_ERROR) {
-        USART_SEND(CURRENT_FAILED_MESSAGE);
+    if (RESULT == COMMUNICATION_ERROR) { 
+        CURRENT_FAILED_MESSAGE = FAILED_MESSAGE_BUFFER[Index_Out]; 
+        EXECUTE_SEND(CURRENT_FAILED_MESSAGE, 0);
         IS_BUSY = 1;  
         ATTEMPTS++;
     } 
 
-    else {
+    else if (RESULT == COMMUNICATION_SUCCESS) {
+        IS_BUSY = 0; 
         ATTEMPTS = 0; 
         CURRENT_FAILED_MESSAGE = COMMUNICATION_NULL_RESULT; 
         return;  
     }
 
-
 }
 
-USART_SENDERS DEFINE_CHOSEN_SEND(CHOSEN_SEND_FUNCTION) {
-    return CHOSEN_SEND_FUNCTION; 
+USART_SENDERS DEFINE_CHOSEN_SEND(uint8_t USART_SEND_MODE) {
+    
+    if (USART_SEND_MODE > 1 ) {
+        USART_SEND_MODE = 0; 
+    }  
+
+    return MAPPED_WRAPPERS[USART_SEND_MODE]; 
+
 } 
+
+void EXECUTE_SEND(char message, uint8_t mode) {
+    USART_SENDERS WISHED_SEND_MODE = DEFINE_CHOSEN_SEND(mode);
+    static char payload[2];
+
+    payload[0] = message; 
+    payload[1] = '\0' ;
+    
+    WISHED_SEND_MODE(payload);
+}
