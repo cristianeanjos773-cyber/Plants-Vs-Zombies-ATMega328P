@@ -100,12 +100,7 @@ USART_SENDERS DEFINE_CHOSEN_SEND(uint8_t USART_SEND_MODE) {
 
 } 
 
-void USART_SAFE_SEND(char message, uint8_t mode) {
+void USART_SAFE_SEND(const char *message, uint8_t mode) {
     USART_SENDERS WISHED_SEND_MODE = DEFINE_CHOSEN_SEND(mode);
-    static char payload[2];
-
-    payload[0] = message; 
-    payload[1] = '\0' ;
-
-    WISHED_SEND_MODE(payload);
+    WISHED_SEND_MODE(message);
 }
