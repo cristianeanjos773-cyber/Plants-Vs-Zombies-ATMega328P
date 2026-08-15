@@ -11,25 +11,6 @@ static uint8_t Index_In = 0;
 static uint8_t Index_Out = 0; 
 
 
-
-void USART_SEND_STRING_WRAPPER(char *MESSAGE) {
-
-    if (!MESSAGE) {
-        PutElectricity(&PORTD, PD3); 
-    }
-
-    USART_SEND(MESSAGE[0]); 
-}
-
-void USART_SEND_LETTER_WRAPPER(const char *MESSAGE) {
-    USART_SEND_STRING(MESSAGE); 
-}
-
-static const USART_SENDERS MAPPED_WRAPPERS[] = {
-    USART_SEND_LETTER_WRAPPER, 
-    USART_SEND_STRING_WRAPPER 
-}; 
-
 void ENQUEUE_MESSAGE(char MESSAGE_TO_ENQUEUE) {
        
     uint8_t Next_Index_In = (Index_In + 1) % BUFFER_SIZE;  
@@ -96,17 +77,14 @@ void MANAGE_RETRIES(void) {
 
 }
 
-USART_SENDERS DEFINE_CHOSEN_SEND(uint8_t USART_SEND_MODE) {
-    
-    if (USART_SEND_MODE > 1 ) {
-        USART_SEND_MODE = 0; 
-    }  
-
-    return MAPPED_WRAPPERS[USART_SEND_MODE]; 
-
-} 
-
 void USART_SAFE_SEND(const char *message, uint8_t mode) {
-    USART_SENDERS WISHED_SEND_MODE = DEFINE_CHOSEN_SEND(mode);
-    WISHED_SEND_MODE((const char *)message); 
+
+    if (mode == 0) {
+        USART_SEND(message[0]); 
+    }
+
+    else {
+        USART_SEND_STRING(message);
+    } 
+
 }

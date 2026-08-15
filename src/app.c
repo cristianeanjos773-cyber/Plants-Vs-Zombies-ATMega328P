@@ -1,19 +1,5 @@
 #include "app.h"
 
-#include "Modules/BUTTONS/BUTTONElectricityModule.h"
-#include "Modules/LED/LEDElectricityModule.h" 
-#include "Modules/LIGHT_SENSORS/LIGHT_SENSOR_TASK.h"
-
-#include "Modules/utils/ControlDDR.h"
-#include "Modules/utils/ControlElectricity.h"
-
-#include "Modules/SERIAL_FOLDER/USART_DRIVE.h"
-
-#include "Modules/GLOBAL/ISRFunctionsCallback.h"
-#include "Modules/GLOBAL/TASK_SCHEDULER.h"
-
-#include <avr/io.h>
-#include <util/delay.h>
 
 void APP_SET_PINS() {
   SetPinAsInput(&DDRB, PB4); // THIS SHOULD BE A BUTTON 

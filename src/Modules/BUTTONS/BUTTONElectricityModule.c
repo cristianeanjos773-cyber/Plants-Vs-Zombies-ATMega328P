@@ -51,9 +51,7 @@ LED_PINS LEDS[3] = {
   {&PORTD, PD6},
 }   ; 
 
-BUZZER_TASK_CONFIG BUTTON_BUZZER_CONFIG[1] = {
-  {.BUZZER_SPEED = FAST_BUZZER_SPEED},
-}   ; 
+
 
 void ON_BUTTON_PRESSED(void) { 
   
@@ -63,18 +61,22 @@ void ON_BUTTON_PRESSED(void) {
   IsButtonPressed = CHECK_BUTTON_PHYSICAL_STATS(PB4);
  
   if (IsButtonPressed == 1 && !ButtonLastState) {
-    
+
     TimesPressedVAR++;
     
     if (TimesPressedVAR >= 3) {
       TimesPressedVAR = -1;
       TURN_OFF_ALL_LEDS(LEDS, 3);
-      BUZZER_DEFINE_TASK(BUTTON_BUZZER_CONFIG, 0, BUZZER_MODE_BIP);    
-    } else { 
-      BUZZER_DEFINE_TASK(BUTTON_BUZZER_CONFIG, 1, BUZZER_MODE_BIP);    
-      USART_SAFE_SEND('B', LETTER_MODE);
-      InvertElectricity(&PORTD, PD6); 
+      BUZZER_DEFINE_TASK(BUZZER_FAST_BIP, 0, BUZZER_MODE_BIP);    
     }
+
+    else { 
+      char message = 'B'; 
+      
+      BUZZER_DEFINE_TASK(BUZZER_FAST_BIP, 1, BUZZER_MODE_BIP);    
+      USART_SAFE_SEND(&message, LETTER_MODE);
+      InvertElectricity(&PORTD, PD6); 
+    }  
 
   }
 
