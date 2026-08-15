@@ -22,7 +22,7 @@ typedef enum {
     BUZZER_MODE_HIGH_PITCH, 
 } BUZZER_MODE_ENUM  ;
 
-typedef void (*USART_SENDERS)(char *MESSAGE); 
+typedef void (*USART_SENDERS)(const char *MESSAGE); 
 
 
 typedef struct {

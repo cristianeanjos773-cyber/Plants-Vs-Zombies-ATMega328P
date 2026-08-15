@@ -6,6 +6,7 @@
 
 #include "Modules/SERIAL_FOLDER/USART_DRIVE.h"
 #include "Modules/BUZZERS/BUZZER_TASK.h"
+#include "Modules/SERIAL_FOLDER/USART_TASK.h"
 #include "Modules/GLOBAL/GLOBAL_TYPES.h"
 
 #include <avr/io.h>
@@ -45,9 +46,9 @@ void (*REACTORS[])(volatile uint8_t *PORT_ID, uint8_t PIN_ID) = {
 }   ;
 
 LED_PINS LEDS[3] = {
-  {&PORTD, PD5},
-  {&PORTD, PD3},
-  {&PORTD, PD5},
+  {&PORTD, PD7},
+  {&PORTD, PD7},
+  {&PORTD, PD6},
 }   ; 
 
 BUZZER_TASK_CONFIG BUTTON_BUZZER_CONFIG[1] = {
@@ -71,6 +72,7 @@ void ON_BUTTON_PRESSED(void) {
       BUZZER_DEFINE_TASK(BUTTON_BUZZER_CONFIG, 0, BUZZER_MODE_BIP);    
     } else { 
       BUZZER_DEFINE_TASK(BUTTON_BUZZER_CONFIG, 1, BUZZER_MODE_BIP);    
+      USART_SAFE_SEND('B', LETTER_MODE);
       InvertElectricity(&PORTD, PD6); 
     }
 

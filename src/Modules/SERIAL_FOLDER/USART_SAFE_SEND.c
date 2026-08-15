@@ -1,4 +1,5 @@
 #include "USART_SAFE_SEND.h"
+#include "Modules/utils/ControlElectricity.h"
 #define BUFFER_SIZE 12 
 
 static char CURRENT_FAILED_MESSAGE = COMMUNICATION_NULL_RESULT; 
@@ -12,10 +13,15 @@ static uint8_t Index_Out = 0;
 
 
 void USART_SEND_STRING_WRAPPER(char *MESSAGE) {
+
+    if (!MESSAGE) {
+        PutElectricity(&PORTD, PD3); 
+    }
+
     USART_SEND(MESSAGE[0]); 
 }
 
-void USART_SEND_LETTER_WRAPPER(char *MESSAGE) {
+void USART_SEND_LETTER_WRAPPER(const char *MESSAGE) {
     USART_SEND_STRING(MESSAGE); 
 }
 
@@ -63,7 +69,7 @@ void MANAGE_RETRIES(void) {
         }
 
         ATTEMPTS = 1;
-        USART_SAFE_SEND(CURRENT_FAILED_MESSAGE, LETTER_MODE);
+        USART_SAFE_SEND(&CURRENT_FAILED_MESSAGE, LETTER_MODE);
     }
 
     char RESULT = COMMUNICATION_RESULT(); 
@@ -83,7 +89,7 @@ void MANAGE_RETRIES(void) {
         } 
         
         else {
-            USART_SAFE_SEND(CURRENT_FAILED_MESSAGE, LETTER_MODE);  
+            USART_SAFE_SEND(&CURRENT_FAILED_MESSAGE, LETTER_MODE);  
         }
 
     }
@@ -102,5 +108,5 @@ USART_SENDERS DEFINE_CHOSEN_SEND(uint8_t USART_SEND_MODE) {
 
 void USART_SAFE_SEND(const char *message, uint8_t mode) {
     USART_SENDERS WISHED_SEND_MODE = DEFINE_CHOSEN_SEND(mode);
-    WISHED_SEND_MODE(message);
+    WISHED_SEND_MODE((const char *)message); 
 }

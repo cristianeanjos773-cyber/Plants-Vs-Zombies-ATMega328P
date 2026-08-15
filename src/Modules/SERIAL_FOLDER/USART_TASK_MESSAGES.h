@@ -5,4 +5,5 @@
 */
 
 #define LIGHT_MESSAGE 'L'
+#define BUTTON_MESSAGE 'B'
 #define CONNECTION_ESTABLISHED 'C' 

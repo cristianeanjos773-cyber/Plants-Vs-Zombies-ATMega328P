@@ -59,7 +59,7 @@ void USART_SEND(char MESSAGE) {
     UCSR0B |= (1 << UDRIE0); 
 }
 
-void USART_SEND_STRING(char *MESSAGE) {
+void USART_SEND_STRING(const char *MESSAGE) {
     while (*MESSAGE != '\0') {
         USART_SEND(*MESSAGE); 
         MESSAGE++;
