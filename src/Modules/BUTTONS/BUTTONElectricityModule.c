@@ -46,9 +46,9 @@ void (*REACTORS[])(volatile uint8_t *PORT_ID, uint8_t PIN_ID) = {
 }   ;
 
 LED_PINS LEDS[3] = {
-  {&PORTD, PD7},
-  {&PORTD, PD7},
-  {&PORTD, PD6},
+  {&PORTD, PD5},
+  {&PORTD, PD3},
+  {&PORTD, PD5},
 }   ; 
 
 

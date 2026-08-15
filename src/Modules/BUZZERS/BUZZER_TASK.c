@@ -18,7 +18,9 @@ void BUZZER_TASK(void) {
 
    if (BUZZER_MODE == BUZZER_MODE_HIGH_PITCH) { 
     BUZZER_HIGH_PITCH(); 
-   } else if (BUZZER_MODE == BUZZER_MODE_BIP) {
+   } 
+   
+   else if (BUZZER_MODE == BUZZER_MODE_BIP) {
     BUZZER_BIP(); 
    }
 
