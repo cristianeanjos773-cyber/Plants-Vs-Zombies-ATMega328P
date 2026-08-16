@@ -7,5 +7,6 @@
 #include "Modules/LIGHT_SENSORS/LIGHT_SENSOR_TASK.h"
 #include "Modules/SERIAL_FOLDER/USART_TASK.h"
 
+
 void SCHEDULER_INIT(void);
 void SCHEDULER_RUN(void);  

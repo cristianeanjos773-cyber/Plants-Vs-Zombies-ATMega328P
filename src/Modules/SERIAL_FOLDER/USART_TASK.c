@@ -1,7 +1,5 @@
 #include "USART_TASK.h"
 
-
-
 static char Result = COMMUNICATION_NULL_RESULT; 
 
 void USART_TASK(void) {
@@ -26,6 +24,7 @@ char COMMUNICATION_RESULT(void) {
     switch (Result) { 
         
         case COMMUNICATION_SUCCESS:
+            PutElectricity(&PORTD, PD3); 
             return COMMUNICATION_SUCCESS;     
         
         case COMMUNICATION_ERROR: 
@@ -40,4 +39,9 @@ char COMMUNICATION_RESULT(void) {
         return COMMUNICATION_NULL_RESULT;  
     }
 
+}
+
+// this function is here so other archives can read it without needing to make the Result variable non static 
+char GET_RESULT() { 
+    return Result;
 }

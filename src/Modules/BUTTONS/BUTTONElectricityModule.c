@@ -15,17 +15,17 @@
 #include <util/delay.h>
 #include <stdint.h>
 
-volatile int TimesPressedVAR = -1; 
+volatile uint8_t TimesPressedVAR = -1; 
 
-uint8_t CHECK_BUTTON_PHYSICAL_STATS(int PIN_ID) {
+uint8_t CHECK_BUTTON_PHYSICAL_STATS(uint8_t PIN_ID) {
   
-  if (!(PINB & (1 << PIN_ID))) {
+  if (!(PIND & (1 << PIN_ID))) {
                                                                                             
    _delay_ms(15); 
 
-    if (!(PINB & (1 << PIN_ID))) {
+    if (!(PIND & (1 << PIN_ID))) {
       
-      while (!(PINB & (1 << PIN_ID))) {}
+      while (!(PIND & (1 << PIN_ID))) {}
 
       _delay_ms(15); 
 
@@ -46,19 +46,18 @@ void (*REACTORS[])(volatile uint8_t *PORT_ID, uint8_t PIN_ID) = {
 }   ;
 
 LED_PINS LEDS[3] = {
-  {&PORTD, PD5},
+  {&PORTD, PD4},
   {&PORTD, PD3},
-  {&PORTD, PD5},
+  {&PORTD, PD4},
 }   ; 
 
-
-
+ 
 void ON_BUTTON_PRESSED(void) { 
   
   static uint8_t IsButtonPressed; 
   static uint8_t ButtonLastState = 0; 
   
-  IsButtonPressed = CHECK_BUTTON_PHYSICAL_STATS(PB4);
+  IsButtonPressed = CHECK_BUTTON_PHYSICAL_STATS(PD7);
  
   if (IsButtonPressed == 1 && !ButtonLastState) {
 

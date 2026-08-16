@@ -1,9 +1,4 @@
-#include "LEDElectricityModule.h" 
-#include "Modules/utils/ControlElectricity.h" 
-#include "util/delay.h"
-#include <stdint.h>
-#include <avr/io.h>
-
+#include "LEDElectricityModule.h"
 
 int ReturnLEDElectricityStatus(volatile uint8_t *PORT_CHECK_ID, uint8_t PIN_ID) {
   int IsTurnedOn = 1; 
@@ -24,7 +19,7 @@ void TURN_OFF_ALL_LEDS(LED_PINS LED_ARRAY[], int ARRAY_AMOUNT) {
   }
 } 
 
-void TASK_LED(void) {
+void TASK_BUTTON_LED(void) {
    
   if (TimesPressedVAR < 0 || TimesPressedVAR >= 3) {
     return; 
@@ -34,5 +29,27 @@ void TASK_LED(void) {
   uint8_t CHOSEN_PIN = LEDS[TimesPressedVAR].PIN;
 
   REACTORS[TimesPressedVAR](CHOSEN_PORT, CHOSEN_PIN);
+
+}
+
+volatile uint16_t TASK_LED_COMM_NUM = 1000; 
+
+void TASK_LED_WARN_COMMUNICATION_STATUS() {
+  char Result = GET_RESULT(); 
+
+  if (Result == COMMUNICATION_SUCCESS) {
+    TASK_LED_COMM_NUM = 5000;
+    PutElectricity(&PORTD, PD5);
+  } 
+
+  else if (Result == COMMUNICATION_ERROR) {
+    TASK_LED_COMM_NUM = 5000; 
+    InvertElectricity(&PORTD, PD5); 
+  }
+
+  else {
+    TASK_LED_COMM_NUM = 10000; 
+    InvertElectricity(&PORTD, PD5); 
+  }
 
 }
