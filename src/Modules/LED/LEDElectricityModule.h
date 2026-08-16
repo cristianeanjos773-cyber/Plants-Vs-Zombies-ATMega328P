@@ -1,11 +1,18 @@
 #ifndef LEDElectricityModule_H
 #define LEDElectricityModule_H
 
+#define LED_BLINK_ERROR_TIME 1000
+#define LED_BLINK_NULL_TIME 5000 
+
 #include "Modules/BUTTONS/BUTTONElectricityModule.h"
 #include <stdint.h>
 #include "LEDElectricityModule.h" 
+
 #include "Modules/utils/ControlElectricity.h" 
+
+#include "Modules/GLOBAL/TASK_SCHEDULER.h"
 #include "Modules/SERIAL_FOLDER/USART_TASK.h"
+
 #include "util/delay.h"
 #include <stdint.h>
 #include <avr/io.h>

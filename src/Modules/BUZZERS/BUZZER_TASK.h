@@ -5,7 +5,7 @@
 #include "Modules/GLOBAL/GLOBAL_TYPES.h"
 #include <avr/io.h>
 
-extern volatile int TimesPressedVAR; 
+extern volatile uint8_t TimesPressedVAR; 
 
 void BUZZER_TASK(void); 
 void BUZZER_PLAY(void); 

@@ -5,7 +5,7 @@
 // #include "Modules/LIGHT_SENSORS/LIGHT_SENSOR_TASK.h"
 
 
-uint8_t CHECK_BUTTON_PHYSICAL_STATS(int PIN_ID);
+uint8_t CHECK_BUTTON_PHYSICAL_STATS(uint8_t PIN_ID);
 void ON_BUTTON_PRESSED(void); 
 
 #endif 
