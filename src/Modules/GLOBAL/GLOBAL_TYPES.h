@@ -1,7 +1,7 @@
 #pragma once
 #include <stdint.h> 
 /*
-Purpose: to store all types inside of this module. 
+Purpose: to store all types AND Enuums inside of this module. 
 */
 
 typedef struct { /*This will be the type of the requested quests*/
@@ -21,6 +21,11 @@ typedef enum {
     BUZZER_MODE_BIP,
     BUZZER_MODE_HIGH_PITCH, 
 } BUZZER_MODE_ENUM  ;
+
+typedef enum {
+    TRIGGER_ACTIVATED, 
+    ECHO_ACTIVATED, 
+} DISTANCE_TASK_ENUM ; 
 
 typedef void (*USART_SENDERS)(const char *MESSAGE); 
 

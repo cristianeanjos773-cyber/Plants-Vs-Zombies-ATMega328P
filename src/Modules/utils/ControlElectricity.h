@@ -1,9 +1,16 @@
-#ifndef  ControlElectricity_H
-#define ControlElectricity_H
-#include <stdint.h>
+#pragma once 
 
-static inline void RemoveElectricity(volatile uint8_t *PORT_ID, uint8_t PIN_ID); 
-static inline void PutElectricity(volatile uint8_t *PORT_ID, uint8_t PIN_ID);
-static inline void InvertElectricity(volatile uint8_t *PORT_ID, uint8_t PIN_ID); 
+#include <avr/io.h>
+#include <stdint.h> 
 
-#endif 
+static inline void PutElectricity(volatile uint8_t *PORT_ID, uint8_t PIN_ID) {
+  *PORT_ID |= (1 << PIN_ID); 
+}
+
+static inline void RemoveElectricity(volatile uint8_t *PORT_ID, uint8_t PIN_ID) {
+  *PORT_ID &= ~(1 << PIN_ID); 
+}
+
+static inline void InvertElectricity(volatile uint8_t *PORT_ID, uint8_t PIN_ID) {
+  *PORT_ID ^= (1 << PIN_ID); 
+}
