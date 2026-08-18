@@ -2,14 +2,15 @@
 #include <avr/interrupt.h>
 #define TOTAL_TASKS 6 
 
-TASK_CONFIG TASK_SYSTEMS[TOTAL_TASKS] = {
-    {TASK_BUTTON_LED, 1000, 0, 0},
-    {ON_BUTTON_PRESSED, 20, 0, 0}, 
-    {BUZZER_TASK, 16, 0, 0}, 
-    {LIGHT_SENSOR_TASK, 6000, 0, 0}, 
-    {USART_TASK, 200, 0, 0}, 
-    {TASK_LED_WARN_COMMUNICATION_STATUS, 1000, 0, 0}, 
-}; 
+    TASK_CONFIG TASK_SYSTEMS[TOTAL_TASKS] = {
+        {TASK_BUTTON_LED, 1000, 0, 0},
+        {ON_BUTTON_PRESSED, 20, 0, 0}, 
+        {BUZZER_TASK, 16, 0, 0}, 
+        {LIGHT_SENSOR_TASK, 6000, 0, 0}, 
+        {USART_TASK, 200, 0, 0}, 
+        {TASK_LED_WARN_COMMUNICATION_STATUS, 1000, 0, 0}, 
+        {DISTANCE_SENSOR_TASK, 100, 0, 0}, 
+    }; 
 
 
 

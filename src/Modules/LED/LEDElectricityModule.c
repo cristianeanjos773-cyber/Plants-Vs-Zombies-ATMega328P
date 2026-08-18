@@ -36,7 +36,6 @@ void TASK_LED_WARN_COMMUNICATION_STATUS() {
   char Result = GET_RESULT(); 
 
   if (Result == COMMUNICATION_SUCCESS) {
-
     PutElectricity(&PORTD, PD5);
   } 
 

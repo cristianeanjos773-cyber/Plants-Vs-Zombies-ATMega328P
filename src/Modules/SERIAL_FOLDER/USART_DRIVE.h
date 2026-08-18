@@ -3,6 +3,7 @@
 #define F_CPU 16000000UL
 #include <avr/io.h> 
 #include <avr/interrupt.h>
+#include "ON_SERIAL_MESSAGE.h"
 
 #define SINGLE_LETTER_MODE 0 
 #define STRING_MODE 1 

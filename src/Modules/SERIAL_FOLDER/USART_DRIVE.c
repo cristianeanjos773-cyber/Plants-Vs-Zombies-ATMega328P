@@ -1,7 +1,6 @@
 #include <avr/io.h> 
 #include <avr/interrupt.h>
 #include "USART_DRIVE.h"
-#include "ON_SERIAL_MESSAGE.h"
 #define BUFFER_SIZE 64   
 
 void SETUP_RECEIVER_AND_SENDER() {
@@ -18,44 +17,45 @@ void SETUP_RECEIVER_AND_SENDER() {
 volatile char TX_BUFFER[BUFFER_SIZE]; 
 volatile char RX_BUFFER[BUFFER_SIZE]; 
 
-volatile uint8_t TXHead = 0; 
-volatile uint8_t TXTail = 0;
+volatile uint8_t TX_index_in = 0; 
+volatile uint8_t TX_index_out = 0;
 
-volatile uint8_t RXHead = 0; 
-volatile uint8_t RXTail = 0; 
+volatile uint8_t RX_index_in = 0; 
+volatile uint8_t RX_index_out = 0; 
 
 
 ISR(USART_RX_vect) {
     char SERIAL_MESSAGE = UDR0; 
-    RX_BUFFER[RXHead] = SERIAL_MESSAGE;
-    RXHead = (RXHead + 1) % BUFFER_SIZE;
+    RX_BUFFER[RX_index_in] = SERIAL_MESSAGE;
+    RX_index_in = (RX_index_in + 1) % BUFFER_SIZE;
 }
  
 ISR(USART_UDRE_vect) {
-    if (TXHead != TXTail) {
-        UDR0 = TX_BUFFER[TXTail]; 
-        TXTail = (TXTail + 1) % BUFFER_SIZE; 
+    if (TX_index_in != TX_index_out) {
+        UDR0 = TX_BUFFER[TX_index_out]; 
+        TX_index_out = (TX_index_out + 1) % BUFFER_SIZE; 
     } else {
         UCSR0B &= ~(1 << UDRIE0);
     }
 }
 
 char USART_READ() {
-    
-    if (RXHead == RXTail) {
+
+    if (RX_index_in == RX_index_out) {
         return 0; 
     }
 
-    char MESSAGE = RX_BUFFER[RXTail];
-    RXTail = (RXTail + 1) % BUFFER_SIZE;  
-    //ON_SERIAL_MESSAGE(MESSAGE);  
+    
+    char MESSAGE = RX_BUFFER[RX_index_out];
+    ON_SERIAL_MESSAGE(MESSAGE); 
+    RX_index_out = (RX_index_out + 1) % BUFFER_SIZE;  
     return MESSAGE; 
 
 }
 
 void USART_SEND(char MESSAGE) {
-    TX_BUFFER[TXHead] = MESSAGE;
-    TXHead = (TXHead + 1) % BUFFER_SIZE;
+    TX_BUFFER[TX_index_in] = MESSAGE;
+    TX_index_in = (TX_index_in + 1) % BUFFER_SIZE;
     UCSR0B |= (1 << UDRIE0); 
 }
 

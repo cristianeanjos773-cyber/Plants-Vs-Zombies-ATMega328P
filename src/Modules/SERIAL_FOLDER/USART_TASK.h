@@ -3,6 +3,7 @@
 #include "avr/io.h"
 #include "USART_DRIVE.h"
 #include "USART_SAFE_SEND.h"
+#include "Modules/utils/ControlElectricity.h"
 
 #define COMMUNICATION_SUCCESS 'S'
 #define COMMUNICATION_ERROR 'E'

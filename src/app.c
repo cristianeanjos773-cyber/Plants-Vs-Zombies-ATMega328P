@@ -3,15 +3,20 @@
 
 void APP_SET_PINS() {
   
-  SetPinAsInput(&DDRD, PD7); // THIS SHOULD BE A BUTTON 
-  //SetPinAsOutput(&DDRB, PB5); // PB GREEN LED! 
-  
-  SetPinAsOutput(&DDRD, PD5); // THIS, PD3 AND PB3 SHOULD BE LEDS RED LED  
+  SetPinAsInput(&DDRB, PB0);
+  SetPinAsInput(&DDRB, PB2);
+  SetPinAsOutput(&DDRB, PB1); 
+
+  SetPinAsOutput(&DDRD, PD5);  
   SetPinAsOutput(&DDRD, PD4);
-  SetPinAsOutput(&DDRD, PD6); // THIS MUST BE A BUZZER 
-  SetPinAsOutput(&DDRD, PD3); // YELLOW LED 
+
+  SetPinAsOutput(&DDRD, PD2);
+  SetPinAsOutput(&DDRD, PD6); 
+  SetPinAsOutput(&DDRD, PD3); 
   
-  PutElectricity(&PORTD, PD7);
+  PutElectricity(&PORTB, PB0);
+
+
 }
 
 void APP_INIT() {

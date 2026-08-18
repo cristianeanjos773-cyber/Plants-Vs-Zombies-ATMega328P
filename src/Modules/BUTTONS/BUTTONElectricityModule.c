@@ -19,13 +19,13 @@ volatile uint8_t TimesPressedVAR = -1;
 
 uint8_t CHECK_BUTTON_PHYSICAL_STATS(uint8_t PIN_ID) {
   
-  if (!(PIND & (1 << PIN_ID))) {
+  if (!(PINB & (1 << PIN_ID))) {
                                                                                             
    _delay_ms(15); 
 
-    if (!(PIND & (1 << PIN_ID))) {
+    if (!(PINB & (1 << PIN_ID))) {
       
-      while (!(PIND & (1 << PIN_ID))) {}
+      while (!(PINB & (1 << PIN_ID))) {}
 
       _delay_ms(15); 
 
@@ -57,7 +57,7 @@ void ON_BUTTON_PRESSED(void) {
   static uint8_t IsButtonPressed; 
   static uint8_t ButtonLastState = 0; 
   
-  IsButtonPressed = CHECK_BUTTON_PHYSICAL_STATS(PD7);
+  IsButtonPressed = CHECK_BUTTON_PHYSICAL_STATS(PB0);
  
   if (IsButtonPressed == 1 && !ButtonLastState) {
 

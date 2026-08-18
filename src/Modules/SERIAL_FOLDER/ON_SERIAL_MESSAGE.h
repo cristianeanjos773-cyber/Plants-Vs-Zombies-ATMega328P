@@ -1,4 +1,5 @@
 #pragma once 
-#define ON_SERIAL_MESSAGE_H
+#include <avr/io.h>
+#include <Modules/utils/ControlElectricity.h>
 
 void ON_SERIAL_MESSAGE(char MESSAGE); 
