@@ -2,20 +2,14 @@
 
 
 void APP_SET_PINS() {
-  
-  SetPinAsInput(&DDRB, PB0);
-  SetPinAsInput(&DDRB, PB2);
-  SetPinAsOutput(&DDRB, PB1); 
+  SetPinAsOutput(&DDRD, BUTTON_CONTROLLED_RED_LED);
+  SetPinAsOutput(&DDRD, BUTTON_CONTROLLED_GREEN_LED);
+  SetPinAsOutput(&DDRD, BOT_CONTROLLED_LED); 
+  SetPinAsInput(&DDRB, BUTTON_PIN);
 
-  SetPinAsOutput(&DDRD, PD5);  
-  SetPinAsOutput(&DDRD, PD4);
-
-  SetPinAsOutput(&DDRD, PD2);
-  SetPinAsOutput(&DDRD, PD6); 
-  SetPinAsOutput(&DDRD, PD3); 
-  
-  PutElectricity(&PORTB, PB0);
-
+  SetPinAsOutput(&DDRD, BUZZER_PIN);  
+  PutElectricity(&PORTD, BUZZER_PIN);
+  PutElectricity(&PORTB, BUTTON_PIN);  
 
 }
 

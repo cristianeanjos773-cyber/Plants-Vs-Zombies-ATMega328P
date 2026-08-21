@@ -5,8 +5,9 @@
 
 #include "Modules/utils/ControlElectricity.h"
 #include "Modules/SERIAL_FOLDER/USART_DRIVE.h"
+#include "Modules/GLOBAL/PINS_DEFINITIONS.h"
 
-#define ANALOG_PIN_0 0 // ANALOG PIN 0 MUST BE WHERE THE LIGHT SENSOR IS. 
+
 
 void LIGHT_SENSOR_INIT(void);
 void LIGHT_SENSOR_TASK(void);  

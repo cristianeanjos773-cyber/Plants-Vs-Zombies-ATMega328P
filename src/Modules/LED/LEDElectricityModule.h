@@ -15,6 +15,7 @@
 
 #include "util/delay.h"
 #include <stdint.h>
+#include "Modules/GLOBAL/PINS_DEFINITIONS.h"
 #include <avr/io.h>
 
 typedef struct {

@@ -1,5 +1,4 @@
 #pragma once
-#include "app.h"
 
 #include "Modules/BUTTONS/BUTTONElectricityModule.h"
 #include "Modules/LED/LEDElectricityModule.h" 
@@ -12,6 +11,7 @@
 
 #include "Modules/GLOBAL/ISRFunctionsCallback.h"
 #include "Modules/GLOBAL/TASK_SCHEDULER.h"
+#include "Modules/GLOBAL/PINS_DEFINITIONS.h"
 
 #include <avr/io.h>
 #include <util/delay.h>

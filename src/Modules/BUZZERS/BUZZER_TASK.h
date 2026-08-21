@@ -3,6 +3,7 @@
 #include "Modules/BUTTONS/BUTTONElectricityModule.h"
 #include "Modules/SERIAL_FOLDER/USART_DRIVE.h"
 #include "Modules/GLOBAL/GLOBAL_TYPES.h"
+#include "Modules/GLOBAL/PINS_DEFINITIONS.h"
 #include <avr/io.h>
 
 extern volatile uint8_t TimesPressedVAR; 

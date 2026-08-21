@@ -7,6 +7,8 @@ int main(void) {
   APP_INIT(); 
 
   while (1) { 
+    PutElectricity(&PORTD, PD6); 
+    RemoveElectricity(&PORTD, PD6);    
     APP_TASK(); 
   }
 

@@ -9,7 +9,6 @@
         {LIGHT_SENSOR_TASK, 6000, 0, 0}, 
         {USART_TASK, 200, 0, 0}, 
         {TASK_LED_WARN_COMMUNICATION_STATUS, 1000, 0, 0}, 
-        {DISTANCE_SENSOR_TASK, 100, 0, 0}, 
     }; 
 
 

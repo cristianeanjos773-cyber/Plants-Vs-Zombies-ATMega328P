@@ -1,0 +1,11 @@
+#pragma once 
+
+#include <avr/io.h>
+
+#define LIGHT_SENSOR_PIN 0 
+#define BUTTON_CONTROLLED_RED_LED PD3
+#define BUTTON_PIN PB1
+#define BUTTON_CONTROLLED_GREEN_LED PD4
+#define BOT_CONTROLLED_LED PD5
+#define COMMUNICATION_STATUS_LED PB0
+#define BUZZER_PIN PD6
