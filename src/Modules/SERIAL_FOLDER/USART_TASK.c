@@ -28,7 +28,6 @@ char COMMUNICATION_RESULT(void) {
     switch (RECEIVED_CHAR) { 
         
         case COMMUNICATION_SUCCESS:
-            PutElectricity(&PORTD, PD3); 
             Result = COMMUNICATION_SUCCESS; 
             return COMMUNICATION_SUCCESS;     
         

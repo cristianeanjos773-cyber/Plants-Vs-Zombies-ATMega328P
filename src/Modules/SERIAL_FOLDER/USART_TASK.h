@@ -1,9 +1,12 @@
 #pragma once 
 #include "stdint.h"
 #include "avr/io.h"
+
 #include "USART_DRIVE.h"
 #include "USART_SAFE_SEND.h"
+
 #include "Modules/utils/ControlElectricity.h"
+#include "Modules/GLOBAL/PINS_DEFINITIONS.h"
 
 #define COMMUNICATION_SUCCESS 'S'
 #define COMMUNICATION_ERROR 'E'
